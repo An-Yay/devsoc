@@ -1,53 +1,57 @@
-import { Select } from "@inkjs/ui";
 import React, { useState } from "react";
-import { render, Box, Text } from 'ink';
-import ContainerElement from "./components/ContainerElement.js";
-import TextInput from 'ink-text-input';
-// import VoiceInput from "./voiceToText.js";
+import { render, Box, Text } from "ink";
+import Select from "ink-select-input";
+import SearchQuery from './SearchQuery.js';
+import TranscribeComponent from "./voiceToText.js";
+// import GenerateAndSave from "./components/generateAndSave.js";
 
-
-
-export default function App() {
-	const [feature, setFeature] = useState("");
-	if (feature == 'text-command') {
-		render(<SearchQuery />);
-	}
-	else if (feature == 'voice-command') {
-
-	}
-
-
-
-
-	return (
-		<ContainerElement>
-			<Select
-				options={[
-					{ label: 'Text Command', value: 'text-command' },
-					{ label: 'Voice Command', value: 'voice-command' },
-					{ label: 'Help', value: 'help' },
-					{ label: 'Exit', value: 'exit' },
-				]}
-				onChange={value => {
-					setFeature(value);
-					if (value === 'exit') process.exit();
-				}}
-			/>
-		</ContainerElement>
-
-	)
+interface Feature {
+	value: string;
 }
 
-const SearchQuery = () => {
-	const [query, setQuery] = useState('');
+const App = () => {
+	const [feature, setFeature] = useState<Feature | null>(null); // Feature or null
+	const [, , filename, duration] = process.argv;
+	const texttoinp = "hi bro";
+
+	if (feature?.value === "text-command") { // Use optional chaining
+		return (
+			<SearchQuery
+				onSubmit={(query: string) => { // Specify query type as string
+					return console.log("User query:", query);
+				}}
+			/>
+		);
+	}
 
 	return (
-		<Box>
-			<Box marginRight={1}>
-				<Text>Enter your query:</Text>
-			</Box>
+		<Box flexDirection="column">
+			<Text>Choose an option:</Text>
+			<Select
+				items={[
+					{ label: "Text Command", value: "text-command" },
+					{ label: "Voice Command", value: "voice-command" },
+					{ label: "Help", value: "help" },
+					{ label: "Exit", value: "exit" }, // Remove extra space
+				]}
+				onSelect={(item) => {
+					setFeature(item);
+					if (item.value === "exit") {
+						 process.exit();
+					}
+					else if(item.value === "voice-command") { 
+						render(<TranscribeComponent />);
+					}
 
-			<TextInput value={query} onChange={setQuery} />
+				}}
+			/>
+			
+			{/* <GenerateAndSave text={texttoinp} /> */}
+
 		</Box>
 	);
 };
+
+render(<App />);
+
+export default App;
