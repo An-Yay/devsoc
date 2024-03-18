@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Text } from 'ink';
 import { exec } from 'child_process';
 import path from 'path';
+import fs from 'fs';
+import GenerateAndSave from "./components/generateAndSave.js";
+
 
 const RecordAudioComponent = () => {
   const [status, setStatus] = useState('Recording...');
@@ -36,7 +39,27 @@ const RecordAudioComponent = () => {
     const folder2 = './source/assets/text/'
     const filename = path.join(folder, 'audio.wav');
     const filename2 = path.join(folder2, 'transcribed.txt');
-    const transcriptionProcess = exec(`echogarden transcribe ${filename} ${filename2} --overwrite`);
+    const transcriptionProcess = exec(`echogarden transcribe ${filename} ${filename2} --overwrite`)
+    console.log("hi1")
+
+    //make it stop transcribing after 10 seconds
+    const timeout = setTimeout(() => {
+      console.log("hi2")
+
+      
+    }, 10000);
+
+    fs.readFile(filename2, 'utf8', (err, data) => {
+      console.log("hi3")
+      if (err) {
+        console.error(`Error reading transcribed text file: ${err}`);
+        return;
+      }
+      console.log("hi4")
+
+      setTranscription(data); // Set the transcription state with the content of the file
+      <GenerateAndSave text={data} /> // Use generateAndSave component with the transcribed text
+    });
   };
 
   return (
@@ -46,5 +69,6 @@ const RecordAudioComponent = () => {
     </>
   );
 };
+
 
 export default RecordAudioComponent;

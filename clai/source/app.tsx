@@ -3,7 +3,7 @@ import { render, Box, Text } from "ink";
 import Select from "ink-select-input";
 import SearchQuery from './SearchQuery.js';
 import TranscribeComponent from "./voiceToText.js";
-// import GenerateAndSave from "./components/generateAndSave.js";
+import GenerateAndSave from "./components/generateAndSave.js";
 
 interface Feature {
 	value: string;
@@ -12,7 +12,7 @@ interface Feature {
 const App = () => {
 	const [feature, setFeature] = useState<Feature | null>(null); // Feature or null
 	const [, , filename, duration] = process.argv;
-	const texttoinp = "hi bro";
+	const texttoinp = "hi bro!! how r u";
 
 	if (feature?.value === "text-command") { // Use optional chaining
 		return (
@@ -42,6 +42,7 @@ const App = () => {
 					else if(item.value === "voice-command") { 
 						render(<TranscribeComponent />);
 					}
+					
 
 				}}
 			/>
