@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Box, Text } from "ink";
+import { render, Box, Text } from "ink";
 import TextInput from "ink-text-input";
 import { useInput } from "ink";
+import GenerateAndSave from "./components/generateAndSave.js";
 
 type SearchQueryProps = {
       onSubmit: (query: string) => void;
@@ -27,6 +28,10 @@ const SearchQuery = ({ onSubmit }: SearchQueryProps) => {
       const _handleExit = () => {
             process.exit();
       };
+      const handleSubmit = () => {
+            // Render the GenerateAndSave component with the query as a prop
+            render(<GenerateAndSave text={query} />);
+      };
 
       return (
             <Box flexDirection="column">
@@ -34,7 +39,7 @@ const SearchQuery = ({ onSubmit }: SearchQueryProps) => {
                         <Text>Enter your query:</Text>
                   </Box>
                   <Box>
-                        <TextInput value={query} onChange={setQuery} />
+                        <TextInput value={query} onChange={setQuery} onSubmit={handleSubmit} />
                   </Box>
                   {showOptions && (
                         <Box marginTop={1}>
