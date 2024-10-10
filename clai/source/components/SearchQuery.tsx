@@ -1,15 +1,16 @@
-// source/components/SearchQuery.tsx
 import React, { useState } from "react";
 import { Box, Text } from "ink";
 import TextInput from "ink-text-input";
-import Select from "ink-select-input";
+import { Select, ConfirmInput, Alert, StatusMessage, Spinner } from '@inkjs/ui';
 import NotDiamondRequest from './NotDiamondRequest.js';
+import { useApp } from 'ink';
 
 type SearchQueryProps = {
   onSubmit: (query: string) => void;
 };
 
 const SearchQuery = ({ onSubmit }: SearchQueryProps) => {
+  const { exit } = useApp();
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -35,11 +36,12 @@ const SearchQuery = ({ onSubmit }: SearchQueryProps) => {
     setOutputMessage(output);
   };
 
-  const handleContinuationChoice = (choice: { value: string }) => {
-    setContinuationChoice(choice.value);
-    if (choice.value === 'yes') {
+  const handleContinuationChoice = (confirmed: boolean) => {
+    if (confirmed) {
       setIsComplete(false);
       setOutputMessage("");
+    } else {
+      exit();
     }
   };
 
@@ -49,41 +51,43 @@ const SearchQuery = ({ onSubmit }: SearchQueryProps) => {
 
   if (isComplete) {
     return (
-      <Box flexDirection="column">
-        <Text>{outputMessage}</Text>
-        <Text>Would you like to continue?</Text>
-        <Select
-          items={[
-            { label: "Yes", value: "yes" },
-            { label: "No", value: "no" },
-          ]}
-          onSelect={handleContinuationChoice}
-        />
+      <Box flexDirection="column" padding={1}>
+        <StatusMessage variant="success">
+          Generation Complete
+        </StatusMessage>
+        <Box marginBottom={1} padding={1} borderStyle="single">
+          <Text>{outputMessage}</Text>
+        </Box>
+        <Alert variant="info">
+          Would you like to continue?
+        </Alert>
+        <ConfirmInput onConfirm={() => handleContinuationChoice(true)} onCancel={() => handleContinuationChoice(false)} />
       </Box>
     );
   }
 
   if (continuationChoice === 'no') {
     return (
-      <Box flexDirection="column">
+      <Box flexDirection="column" padding={1}>
         <Text>{outputMessage}</Text>
-        <Text>Thank you for using the CLI app. Goodbye!</Text>
-      </Box>
-    );
-  }
-  else {
-    return (
-      <Box flexDirection="column">
-        <Box>
-          <Text>Enter your query:</Text>
-        </Box>
-        <Box>
-          <TextInput value={query} onChange={setQuery} onSubmit={handleSubmit} />
-        </Box>
+        <StatusMessage variant="info">
+          Thank you for using the CLI app. Goodbye!
+        </StatusMessage>
       </Box>
     );
   }
 
+  return (
+    <Box flexDirection="column" padding={1}>
+      <StatusMessage variant="info">
+        Enter your query:
+      </StatusMessage>
+      <Box marginBottom={1}>
+        <TextInput value={query} onChange={setQuery} onSubmit={handleSubmit} />
+      </Box>
+      <Text dimColor>Press Enter to submit your query</Text>
+    </Box>
+  );
 };
 
 export default SearchQuery;

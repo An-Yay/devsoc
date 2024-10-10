@@ -1,8 +1,8 @@
-// source/app.tsx
 import React, { useState } from "react";
 import { Box, Text } from "ink";
 import Select from "ink-select-input";
 import SearchQuery from "./components/SearchQuery.js";
+import { Alert, StatusMessage } from "@inkjs/ui";
 
 interface Feature {
   value: string;
@@ -22,11 +22,28 @@ const App = () => {
   }
 
   return (
-    <Box flexDirection="column">
-      <Text>█▀▀ █░░ ▄▀█ █</Text>
-      <Text>█▄▄ █▄▄ █▀█ █</Text>
-      <Text>{"\n"}</Text>
-      <Text>Choose an option:</Text>
+    <Box flexDirection="column" padding={1}>
+      <Box marginBottom={1} justifyContent="center">
+        <Text color="cyan" bold>
+          {`
+   █▀▀ █░░ ▄▀█ █
+   █▄▄ █▄▄ █▀█ █
+          `}
+        </Text>
+      </Box>
+
+      <StatusMessage variant="info">
+        Welcome to CLAI - Your Command Line AI Assistant
+      </StatusMessage>
+
+      <Alert variant="info">
+        Choose an option to get started
+      </Alert>
+
+      <Box marginBottom={1}>
+        <Text bold>Available options:</Text>
+      </Box>
+
       <Select
         items={[
           { label: "Text Command", value: "text-command" },
