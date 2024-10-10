@@ -1,5 +1,4 @@
 // source/app.tsx
-
 import React, { useState } from "react";
 import { Box, Text } from "ink";
 import Select from "ink-select-input";
@@ -24,7 +23,9 @@ const App = () => {
 
   return (
     <Box flexDirection="column">
-      <Text>CLAI</Text>
+      <Text>█▀▀ █░░ ▄▀█ █</Text>
+      <Text>█▄▄ █▄▄ █▀█ █</Text>
+      <Text>{"\n"}</Text>
       <Text>Choose an option:</Text>
       <Select
         items={[
