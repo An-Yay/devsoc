@@ -1,12 +1,10 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"typeRoots": [
-			"./node_modules/@types"
-		],
+		"typeRoots": [ "./types", "./node_modules/@types"],
 		"outDir": "dist",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 	},
-	"include": ["source"]
+	"include": ["source", "types", "test.js"]
 }
