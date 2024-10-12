@@ -29,11 +29,13 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete }) =>
       fileType: 'wav'
     });
 
+    const executionDir = process.env['PWD'] || process.cwd();
+
     const outputFileName = `recording_${Date.now()}.wav`;
-    const outputFilePath = path.join(process.cwd(), 'recordings', outputFileName);
+    const outputFilePath = path.join(executionDir, 'recordings', outputFileName);
     
-    if (!fs.existsSync(path.join(process.cwd(), 'recordings'))) {
-      fs.mkdirSync(path.join(process.cwd(), 'recordings'));
+    if (!fs.existsSync(path.join(executionDir, 'recordings'))) {
+      fs.mkdirSync(path.join(executionDir, 'recordings'));
     }
 
     const outputFileStream = fs.createWriteStream(outputFilePath);

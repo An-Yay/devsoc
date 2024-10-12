@@ -22,8 +22,10 @@ export const AudioTranscriber: React.FC<AudioTranscriberProps> = ({
 }) => {
   useEffect(() => {
     const transcribe = async () => {
-      const formattedFilePath = path.join(process.cwd(), 'recordings', `formatted_${path.basename(inputFilePath)}`);
-      
+      const executionDir = process.env['PWD'] || process.cwd();
+
+      const formattedFilePath = path.join(executionDir, 'recordings', `formatted_${path.basename(inputFilePath)}`);
+
       try {
         const ffmpegCommand = `ffmpeg -i ${inputFilePath} -ar 16000 -ac 1 ${formattedFilePath}`;
         await execPromise(ffmpegCommand);
