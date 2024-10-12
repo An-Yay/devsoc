@@ -1,3 +1,5 @@
+// source/components/NotDiamondRequest.tsx
+
 import React, { useState, useEffect } from "react";
 import { Text, Box } from "ink";
 import { NotDiamond } from 'notdiamond';

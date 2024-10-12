@@ -6,5 +6,5 @@
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 	},
-	"include": ["source", "types", "test.js"]
+	"include": ["source", "types"]
 }

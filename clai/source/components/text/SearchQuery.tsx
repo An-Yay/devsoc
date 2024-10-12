@@ -1,8 +1,10 @@
+// source/components/text/SearchQuery.tsx
+
 import React, { useState } from "react";
 import { Box, Text } from "ink";
 import TextInput from "ink-text-input";
 import { Select, ConfirmInput, Alert, StatusMessage, Spinner } from '@inkjs/ui';
-import NotDiamondRequest from './NotDiamondRequest.js';
+import NotDiamondRequest from '../NotDiamondRequest.js';
 import { useApp } from 'ink';
 
 type SearchQueryProps = {
