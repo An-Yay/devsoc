@@ -1,4 +1,4 @@
-// source/components/MainMenu.tsx
+// source/components/common/MainMenu.tsx
 
 import React from "react";
 import { Box, Text } from "ink";
@@ -19,15 +19,21 @@ const MainMenu: React.FC<MainMenuProps> = ({ onSelect }) => {
       <Box marginBottom={1} justifyContent="center">
         <Text color="cyan" bold>
           {`
-   █▀▀ █░░ ▄▀█ █
-   █▄▄ █▄▄ █▀█ █
+░█████╗░██╗░░░░░░█████╗░██╗
+██╔══██╗██║░░░░░██╔══██╗██║
+██║░░╚═╝██║░░░░░███████║██║
+██║░░██╗██║░░░░░██╔══██║██║
+╚█████╔╝███████╗██║░░██║██║
+░╚════╝░╚══════╝╚═╝░░╚═╝╚═╝
           `}
         </Text>
       </Box>
+      <Box marginBottom={1} justifyContent="center">
+        <Text>
+          Welcome to CLAI - Your Command Line AI Assistant
+        </Text>
+      </Box>
 
-      <StatusMessage variant="info">
-        Welcome to CLAI - Your Command Line AI Assistant
-      </StatusMessage>
 
       <Alert variant="info">
         Choose an option to get started
@@ -39,8 +45,8 @@ const MainMenu: React.FC<MainMenuProps> = ({ onSelect }) => {
 
       <Select
         items={[
-          { label: "Text Command", value: "text-command" },
-          { label: "Voice Command", value: "voice-command" },
+          { label: "Text Mode", value: "text-command" },
+          { label: "Voice Mode (Beta)", value: "voice-command" },
           { label: "Help", value: "help" },
           { label: "Exit", value: "exit" },
         ]}

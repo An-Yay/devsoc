@@ -1,4 +1,4 @@
-// source/components/voice/VoiceQuery.tsx
+// source/components/voice/VoiceRecorder.tsx
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import NodeMic from 'node-mic';

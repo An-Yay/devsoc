@@ -1,3 +1,5 @@
+// types/whisper-node.d.ts
+
 declare module 'whisper-node' {
   export type IShellOptions = {
       silent: boolean // true: won't print to console

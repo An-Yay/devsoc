@@ -33,7 +33,7 @@ export const VoiceRecorderUI: React.FC<VoiceRecorderUIProps> = ({
 
   const renderControls = () => {
     if (isTranscribing) {
-      return null; // Don't show any controls while transcribing
+      return null;
     }
 
     if (!isRecording) {

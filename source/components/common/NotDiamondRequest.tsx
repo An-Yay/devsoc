@@ -1,4 +1,4 @@
-// source/components/NotDiamondRequest.tsx
+// source/components/common/NotDiamondRequest.tsx
 
 import React, { useState, useEffect } from "react";
 import { Text, Box } from "ink";
@@ -47,11 +47,11 @@ const NotDiamondRequest = ({ query, onComplete }: NotDiamondRequestProps) => {
         messages: [
           { 
             role: 'system', 
-            content: 'You are a bash script generator. Respond only with a valid bash script that accomplishes the task described. Do not include any explanations, comments, or markdown formatting. Start the script with #!/bin/bash and include only the necessary commands.'
+            content: `You are a bash script generator. Respond only with a valid bash script that accomplishes the task described. Do not include any explanations, comments, or markdown formatting. Start the script with #!/bin/bash and include only the necessary commands. Always use the current directory (.) as the base directory for operations.`
           },
           { 
             role: 'user', 
-            content: `Generate a bash script that does the following:\n\n${query}\n\nRemember, respond only with the bash script, no explanations or additional text.`
+            content: `Generate a bash script that does the following:\n\n${query}\n\nRemember, respond only with the bash script, no explanations or additional text. Use the current directory (.) as the base directory.`
           },
         ],
         llmProviders: [
@@ -92,13 +92,14 @@ const NotDiamondRequest = ({ query, onComplete }: NotDiamondRequestProps) => {
 
   const executeScript = async () => {
     const filename = `script_${Date.now()}.sh`;
-    const outputPath = path.join(process.cwd(), 'clai_history', filename);
-
-    await fs.mkdir(path.join(process.cwd(), 'clai_history'), { recursive: true });
+    const executionDir = process.env["PWD"] || process.cwd();
+    const outputPath = path.join(executionDir, 'clai_history', filename);
+    
+    await fs.mkdir(path.join(executionDir, 'clai_history'), { recursive: true });
     await fs.writeFile(outputPath, scriptContent, 'utf8');
     await fs.chmod(outputPath, '755');
 
-    const { stdout, stderr } = await execPromise(`bash ${outputPath}`);
+    const { stdout, stderr } = await execPromise(`bash ${outputPath}`, { cwd: executionDir });
 
     const successMessage = `Bash script generated and saved to: ${outputPath}\n\nScript execution output:\n${stdout}\n${stderr ? `Errors:\n${stderr}` : ''}`;
     setOutput(successMessage);

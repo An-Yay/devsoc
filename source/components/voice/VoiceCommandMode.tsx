@@ -3,7 +3,7 @@
 import React from "react";
 import { Box } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import VoiceRecorder from "./VoiceQuery.js";
+import VoiceRecorder from "./VoiceRecorder.js";
 
 interface VoiceCommandModeProps {
   onRecordingComplete: (transcript: string) => void;

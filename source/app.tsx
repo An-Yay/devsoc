@@ -1,17 +1,25 @@
 // source/app.tsx
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "ink";
 import { useFeatureState } from "./hooks/useFeatureState.js";
-import MainMenu from "./components/MainMenu.js";
+import MainMenu from "./components/common/MainMenu.js";
 import TextCommandMode from "./components/text/TextCommandMode.js";
 import VoiceCommandMode from "./components/voice/VoiceCommandMode.js";
-import HelpMode from "./components/HelpMode.js";
+import HelpMode from "./components/common/HelpPanel.js";
+import NotDiamondRequest from "./components/common/NotDiamondRequest.js";
 
 const App = () => {
   const { feature, setFeature } = useFeatureState();
+  const [transcribedText, setTranscribedText] = useState<string | null>(null);
 
   const handleRecordingComplete = (transcript: string) => {
-    console.log(`Transcription completed.\nTranscript: ${transcript}`);
+    console.log(`Transcript: ${transcript}`);
+    setTranscribedText(transcript);
+  };
+
+  const handleScriptGeneration = (output: string) => {
+    console.log("Script generation completed:", output);
+    setTranscribedText(null);
     setFeature(null);
   };
 
@@ -19,7 +27,11 @@ const App = () => {
     case "text-command":
       return <TextCommandMode />;
     case "voice-command":
-      return <VoiceCommandMode onRecordingComplete={handleRecordingComplete} />;
+      return transcribedText ? (
+        <NotDiamondRequest query={transcribedText} onComplete={handleScriptGeneration} />
+      ) : (
+        <VoiceCommandMode onRecordingComplete={handleRecordingComplete} />
+      );
     case "help":
       return <HelpMode onBack={() => setFeature(null)} />;
     default:
