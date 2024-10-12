@@ -15,7 +15,7 @@ CLAI is an Command Line Interface (CLI) application that integrates text and voi
 
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+Before you begin, ensure you have the following requirements:
 
 - Node.js
 - npm
@@ -39,15 +39,14 @@ Before you begin, ensure you have met the following requirements:
    ```
    NOTDIAMOND_API_KEY=your_api_key_here
    ```
-   You can get the Not Diamond API key from [here](https://app.notdiamond.ai)
-   Add the API keys of the LLM models of your choice by reffering to the notdiamond [page](https://docs.notdiamond.ai/docs/llm-models#defining-additional-model-configurations)
+   You can get the Not Diamond API key from [here](https://app.notdiamond.ai), add the API keys of the LLM models of your choice by reffering to the notdiamond [page](https://docs.notdiamond.ai/docs/llm-models#defining-additional-model-configurations)
    Eg . `GOOGLE_API_KEY=your_key`
 4.  Download whisper model of choice
 
     ```
     npx whisper-node download
     ```
-5. Configure the models you want to use in `source/components/common/NotDiamondRequest.tsx`
+5. Configure the LLM models you want to use in `source/components/common/NotDiamondRequest.tsx`
 
 ## Usage
 
